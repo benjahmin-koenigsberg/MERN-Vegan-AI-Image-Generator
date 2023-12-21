@@ -21,11 +21,14 @@ function Home() {
 
   const [searchedResults, setSearchedResults] = useState(null);
 
+    const baseUrl = 'https://mern-vegan-ai-image-generator.onrender.com' || 'http:localhost:8080'
+
+
   const fetchPosts = async () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://mern-vegan-ai-image-generator.onrender.com/api/v1/post", {
+        const response = await fetch( baseUrl+"/api/v1/post",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
