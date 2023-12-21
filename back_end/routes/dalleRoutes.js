@@ -21,7 +21,7 @@ router.route('/').get((req, res) => {
 
 router.route('/').post(async (req, res) => {
     const veganPromptAdds = ['vegan', 'animal rights', 'animal liberation' , 'vegan activist', 'animal liberation front', 'veganism', 'animal defender']
-    var randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
+    const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
 
     try {
         const { prompt } = req.body 
@@ -35,7 +35,7 @@ router.route('/').post(async (req, res) => {
 
         const aiResponse = await openai.images.generate({
             model: "dall-e-3",
-            prompt: prompt + randomAdd,
+            prompt: prompt += randomAdd,
             n: 1,
             size: '1024x1024',
             response_format: 'b64_json',
