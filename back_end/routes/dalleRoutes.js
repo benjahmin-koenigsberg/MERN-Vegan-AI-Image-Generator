@@ -24,7 +24,7 @@ router.route('/').post(async (req, res) => {
     var randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
 
     try {
-        const { prompt } = req.body = randomAdd;
+        const { prompt } = req.body 
 
         // const response = await axios.get(
         //     `https://lexica.art/api/v1/search?q=${prompt}`
@@ -35,7 +35,7 @@ router.route('/').post(async (req, res) => {
 
         const aiResponse = await openai.images.generate({
             model: "dall-e-3",
-            prompt,
+            prompt: prompt + randomAdd,
             n: 1,
             size: '1024x1024',
             response_format: 'b64_json',
