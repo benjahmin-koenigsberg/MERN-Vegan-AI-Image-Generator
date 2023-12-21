@@ -64,7 +64,7 @@ const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.lengt
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: form.prompt += randomAdd }),
+          body: JSON.stringify({ prompt: form.prompt}),
         });
         const data = await response.json();
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
