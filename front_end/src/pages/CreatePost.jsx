@@ -12,13 +12,16 @@ function CreatePost() {
   const [generateImg, setGenerateImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
+      const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com" || "http:localhost:8080";
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('https://mern-vegan-ai-image-generator.onrender.com/api/v1/post',
+      const response = await fetch(baseUrl+"/api/v1/post",
           {
             method: "POST",
             headers: {
@@ -59,7 +62,7 @@ const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.lengt
     if (form.prompt) {
       try {
         setGenerateImg(true);
-        const response = await fetch('https://mern-vegan-ai-image-generator.onrender.com/api/v1/dalle', {
+        const response = await fetch(baseUrl+"/api/v1/dalle",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
