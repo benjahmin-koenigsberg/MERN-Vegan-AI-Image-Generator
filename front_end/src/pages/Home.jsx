@@ -25,7 +25,7 @@ function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/post", {
+      const response = await fetch("https://mern-vegan-ai-image-generator.onrender.com/api/v1/post", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
