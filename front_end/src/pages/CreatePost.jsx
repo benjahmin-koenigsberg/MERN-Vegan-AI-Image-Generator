@@ -60,7 +60,7 @@ function CreatePost() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: form.prompt + 'veganism' }),
+          body: JSON.stringify({ prompt: form.prompt += ' vegan' }),
         });
         const data = await response.json();
         setForm({ ...form, photo:`data:image/jpeg;base64,${data.photo}` });
