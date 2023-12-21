@@ -18,6 +18,12 @@ app.get('/', async (req, res) => {
     res.send('Hello from DALL-E')
 })
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+    app.get('/*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    });
+
 const startServer = async () => {
 
     try {
