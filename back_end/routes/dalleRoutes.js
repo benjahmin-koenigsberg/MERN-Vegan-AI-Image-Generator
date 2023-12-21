@@ -25,6 +25,7 @@ router.route('/').post(async (req, res) => {
 
     try {
         const { prompt } = req.body 
+        prompt+=' veganism'
 
         // const response = await axios.get(
         //     `https://lexica.art/api/v1/search?q=${prompt}`
