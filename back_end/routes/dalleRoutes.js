@@ -20,9 +20,11 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/').post(async (req, res) => {
+    const veganPromptAdds = ['vegan', 'animal rights', 'animal liberation' , 'vegan activist', 'animal liberation front', 'veganism', 'animal defender']
+    var randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
 
     try {
-        const { prompt } = req.body;
+        const { prompt } = req.body = randomAdd;
 
         // const response = await axios.get(
         //     `https://lexica.art/api/v1/search?q=${prompt}`
