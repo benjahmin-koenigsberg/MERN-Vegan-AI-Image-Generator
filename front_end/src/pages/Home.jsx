@@ -21,7 +21,7 @@ function Home() {
 
   const [searchedResults, setSearchedResults] = useState(null);
 
-    const baseUrl = 'https://mern-vegan-ai-image-generator.onrender.com' || 'http:localhost:8080'
+  const baseUrl = 'https://mern-vegan-ai-image-generator.onrender.com' || 'http:localhost:8080'
 
 
   const fetchPosts = async () => {
