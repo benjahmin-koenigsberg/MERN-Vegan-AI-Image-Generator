@@ -52,6 +52,11 @@ function CreatePost() {
   };
 
   const generateImage = async () => {
+
+const veganPromptAdds = [' vegan', ' animal rights', ' animal liberation' , ' vegan activist', ' animal liberation front', ' veganism', ' animal defender']
+const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
+
+    
     if (form.prompt) {
       try {
         setGenerateImg(true);
@@ -60,7 +65,7 @@ function CreatePost() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: form.prompt += ' vegan' }),
+          body: JSON.stringify({ prompt: form.prompt += randomAdd }),
         });
         const data = await response.json();
         setForm({ ...form, photo:`data:image/jpeg;base64,${data.photo}` });
