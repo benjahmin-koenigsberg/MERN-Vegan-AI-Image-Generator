@@ -1,9 +1,23 @@
+/** @format */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { preview } from "../assets";
 import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
 import axios from "axios";
+
+ const veganPromptAdds = [
+   "vegan",
+   "animal rights",
+   "animal liberation",
+   "vegan activist",
+   "animal liberation front",
+   "veganism",
+   "animal defender",
+ ];
+ const randomAdd =
+   veganPromptAdds[Math.floor(Math.random() * veganPromptAdds.length)];
 
 function CreatePost() {
   const navigate = useNavigate();
@@ -12,9 +26,8 @@ function CreatePost() {
   const [generateImg, setGenerateImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  //const baseUrl = import.meta.env.VITE_BASE_URL;
+
   //const baseUrl = "http://localhost:8080";
-  // const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com" ? "https://mern-vegan-ai-image-generator.onrender.com" : "http://localhost:8080" ;
   const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com";
 
   const handleSubmit = async (e) => {
@@ -24,13 +37,13 @@ function CreatePost() {
       setLoading(true);
       try {
         const response = await fetch(baseUrl + "/api/v1/post", {
-          method: "Post",
-          maxBodyLength: Infinity,
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          data: JSON.stringify({ ...form }),
+          body: JSON.stringify({ ...form }),
         });
+
 
         await response.json();
         alert("Success");
@@ -92,6 +105,7 @@ function CreatePost() {
     if (form.prompt) {
       try {
         setGenerateImg(true);
+        form.prompt+= " " + randomAdd;
         const response = await fetch(baseUrl + "/api/v1/dalle", {
           method: "post",
           headers: {
@@ -108,6 +122,8 @@ function CreatePost() {
         alert(err);
       } finally {
         setGenerateImg(false);
+
+
       }
     } else {
       alert("Please provide proper prompt");
