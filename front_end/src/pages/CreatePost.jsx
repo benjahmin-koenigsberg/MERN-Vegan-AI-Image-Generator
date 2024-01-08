@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { preview } from "../assets";
 import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
-import axios from 'axios'
+import axios from "axios";
 
 function CreatePost() {
   const navigate = useNavigate();
@@ -12,8 +12,10 @@ function CreatePost() {
   const [generateImg, setGenerateImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-      const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com" || "http:localhost:8080";
-
+  //const baseUrl = import.meta.env.VITE_BASE_URL;
+  //const baseUrl = "http://localhost:8080";
+  // const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com" ? "https://mern-vegan-ai-image-generator.onrender.com" : "http://localhost:8080" ;
+  const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,15 +23,14 @@ function CreatePost() {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-      const response = await fetch(baseUrl+"/api/v1/post",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...form }),
-          }
-        );
+        const response = await fetch(baseUrl + "/api/v1/post", {
+          method: "Post",
+          maxBodyLength: Infinity,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify({ ...form }),
+        });
 
         await response.json();
         alert("Success");
@@ -53,59 +54,87 @@ function CreatePost() {
     setForm({ ...form, prompt: randomPrompt });
   };
 
-  const generateImage = async () => {
+  //   const generateImage = async () => {
 
-const veganPromptAdds = [' vegan', ' animal rights', ' animal liberation' , ' vegan activist', ' animal liberation front', ' veganism', ' animal defender']
-const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
+  // const veganPromptAdds = [' vegan', ' animal rights', ' animal liberation' , ' vegan activist', ' animal liberation front', ' veganism', ' animal defender']
+  // const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
 
-    
+  //     if (form.prompt) {
+  //       try {
+  //         setGenerateImg(true);
+  //         const response = await fetch("http://localhost:8080/api/v1/dalle", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             prompt: form.prompt,
+  //           }),
+  //         });
+
+  //         const data = await response.json();
+  //         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+
+  //        // setForm({...form, photo : data.photo })
+
+  //       } catch (error) {
+  //         alert(error);
+  //       } finally {
+  //         setGenerateImg(false);
+  //       }
+  //     } else {
+  //       alert("Please enter a prompt");
+  //     }
+  //   };
+
+  const generateImage = async (e) => {
+    e.preventDefault()
     if (form.prompt) {
       try {
         setGenerateImg(true);
-        const response = await fetch(baseUrl+"/api/v1/dalle",
-          method: "POST",
+        const response = await fetch(baseUrl + "/api/v1/dalle", {
+          method: "post",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: form.prompt}),
+          body: JSON.stringify({
+            prompt: form.prompt,
+          }),
         });
+
         const data = await response.json();
-        setForm({ ...form, photo: `data:image/jpeg;base64, ${data.photo}` });
-
-       // setForm({...form, photo : data.photo })
-
-      } catch (error) {
-        alert(error);
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+      } catch (err) {
+        alert(err);
       } finally {
         setGenerateImg(false);
       }
     } else {
-      alert("Please enter a prompt");
+      alert("Please provide proper prompt");
     }
   };
 
-
-// const generateImage = async () => {
-//   try {
-//     const response = await axios.get(
-//       `https://lexica.art/api/v1/search?q=${form.prompt}`
-//     );
-//     console.log(response.data.images[0].src );
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+  // const generateImage = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://lexica.art/api/v1/search?q=${form.prompt}`
+  //     );
+  //     console.log(response.data.images[0].src );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   return (
     <section className="max-w-7xl mx-auto">
       <div className="">
-        <h1 className="font-extrabold text-[#222328] text-[32px]">Cretae</h1>
+        <h1 className="font-extrabold text-[#222328] text-[32px]">Create</h1>
         <p className="mt-2 text-[#666e75] text-[14px]  text-center">
           Create imaginative and stunning vegan AI images and share them with
           the community
         </p>
       </div>
-      <form className="mt-16 max-w-3xl mx-auto" onSubmit={handleSubmit}>
+      <form className="mt-16 max-w-3xl mx-auto" onSubmit={(e)=>handleSubmit(e)}>
         <div className="flex flex-col gap-5">
           <FormField
             labelName="Your name"
@@ -150,7 +179,7 @@ const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.lengt
         <div className="mt-5 flex gap-5 justify-center">
           <button
             type="button"
-            onClick={generateImage}
+            onClick={(e)=>generateImage(e)}
             className="text-white bg-green-700 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             {generateImg ? "Generating..." : "Generate"}
           </button>
