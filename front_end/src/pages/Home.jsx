@@ -21,14 +21,19 @@ function Home() {
 
   const [searchedResults, setSearchedResults] = useState(null);
 
-  const baseUrl = 'https://mern-vegan-ai-image-generator.onrender.com' || 'http:localhost:8080';
+  // const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com"
+  //   ? "https://mern-vegan-ai-image-generator.onrender.com"
+  //   : "http://localhost:8080";
+
+//const baseUrl = "http://localhost:8080";
+const baseUrl = "https://mern-vegan-ai-image-generator.onrender.com";
 
 
   const fetchPosts = async () => {
     setLoading(true);
 
     try {
-        const response = await fetch( baseUrl+"/api/v1/post", {
+      const response = await fetch(baseUrl + "/api/v1/post", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +110,10 @@ function Home() {
             {/* <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3 "> */}
             <div className="flex flex-col justify-center ">
               {searchText ? (
-                <RenderCards data={searchedResults} title="No Search Results Found" />
+                <RenderCards
+                  data={searchedResults}
+                  title="No Search Results Found"
+                />
               ) : (
                 <RenderCards data={allPosts} title="No Posts Yet" />
               )}
