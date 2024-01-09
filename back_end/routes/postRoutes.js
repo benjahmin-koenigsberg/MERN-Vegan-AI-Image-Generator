@@ -32,9 +32,9 @@ router.route('/').post(async (req, res) => {
         const photoUrl = await cloudinary.uploader.upload(photo, { folder: "veganAI" });
 
 
-        const newPost = await Post.create({
+           const newPost = await Post.create({
             name,
-            prompt: prefix + " " + prompt,
+            prompt: `Prefix: ${prefix} \n Prompt: ${prompt}`,
             photo: photoUrl.url
         });
 
