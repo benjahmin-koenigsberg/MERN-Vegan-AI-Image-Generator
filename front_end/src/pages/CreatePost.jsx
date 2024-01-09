@@ -22,7 +22,7 @@ import axios from "axios";
 function CreatePost() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ name: "", prompt: "", photo: "" });
+  const [form, setForm] = useState({ name: "", prefix: "", prompt: "", photo: "" });
   const [generateImg, setGenerateImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -62,57 +62,27 @@ function CreatePost() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
     setForm({ ...form, prompt: randomPrompt });
   };
 
-  //   const generateImage = async () => {
 
-  // const veganPromptAdds = [' vegan', ' animal rights', ' animal liberation' , ' vegan activist', ' animal liberation front', ' veganism', ' animal defender']
-  // const randomAdd = veganPromptAdds[Math.floor(Math.random()*veganPromptAdds.length)];
-
-  //     if (form.prompt) {
-  //       try {
-  //         setGenerateImg(true);
-  //         const response = await fetch("http://localhost:8080/api/v1/dalle", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             prompt: form.prompt,
-  //           }),
-  //         });
-
-  //         const data = await response.json();
-  //         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
-
-  //        // setForm({...form, photo : data.photo })
-
-  //       } catch (error) {
-  //         alert(error);
-  //       } finally {
-  //         setGenerateImg(false);
-  //       }
-  //     } else {
-  //       alert("Please enter a prompt");
-  //     }
-  //   };
 
   const generateImage = async (e) => {
     e.preventDefault()
     if (form.prompt) {
       try {
         setGenerateImg(true);
-        form.prompt+= " " + randomAdd;
+        //form.prompt+= " " + randomAdd;
         const response = await fetch(baseUrl + "/api/v1/dalle", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            prompt: form.prompt,
+            prompt: form.prefix + form.prompt
           }),
         });
 
@@ -150,7 +120,9 @@ function CreatePost() {
           the community
         </p>
       </div>
-      <form className="mt-16 max-w-3xl mx-auto" onSubmit={(e)=>handleSubmit(e)}>
+      <form
+        className="mt-16 max-w-3xl mx-auto"
+        onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-col gap-5">
           <FormField
             labelName="Your name"
@@ -160,16 +132,35 @@ function CreatePost() {
             value={form.name}
             handleChange={(e) => handleChange(e)}
           />
+
+          <label className="block text-sm font-medium text-gray-900 text-start">
+            Enter a vegan prefix
+          </label>
+          <select
+            name="prefix"
+            value={form.prefix}
+            onChange={handleChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#6469ff] focus:border-[#6469ff] outline-none block w-full p-3">
+            <option value="vegan">Vegan</option>
+            <option value="animal rights">Animal rights</option>
+            <option value="animal liberation">Animal liberation</option>
+            <option value="veganism">Veganism</option>
+            <option value="anti-speciesism">Anti speciesism</option>
+            <option value="vegan activism">Vegan activism</option>
+            <option value="animal defender">Animal defender</option>
+          </select>
+
           <FormField
             labelName="Prompt"
             type="text"
             name="prompt"
-            placeholder="A futuristic city skyline with vegan skyscrapers"
+            placeholder="Enter a prompt"
             value={form.prompt}
             handleChange={handleChange}
             isSurpriseMe
             handleSurpriseMe={handleSurpriseMe}
           />
+
           <div className="relative bg-gray-500 border focus:border-blue-500 border-gray-900 text-sm text-gray-900 rounded-lg focus:ring-blue-500 w-70 p-y h-70 flex justify-center items-center mx-auto">
             {form.photo ? (
               <img
@@ -195,15 +186,15 @@ function CreatePost() {
         <div className="mt-5 flex gap-5 justify-center">
           <button
             type="button"
-            onClick={(e)=>generateImage(e)}
+            onClick={(e) => generateImage(e)}
             className="text-white bg-green-700 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             {generateImg ? "Generating..." : "Generate"}
           </button>
         </div>
         <div className="mt-10">
           <p className="mt-2 text-gray text-[14px]">
-            Once you have created the image want, you can share it with othes in
-            the community
+            Once you have created an image you like, you can share it with othes in
+            the community!
           </p>
           <button
             type="submit"
