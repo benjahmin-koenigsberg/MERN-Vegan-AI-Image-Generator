@@ -40,11 +40,11 @@ Prompt: cow on a rampage
 <img src="https://res.cloudinary.com/benjahmin/image/upload/v1704990660/veganAI/zhtwm1iqmuaah1c9ed0d.png" />
 
 #### Home page
-![Alt text](<screen_shots/vegan dall-e home page.png>)
+![scren shot of home page](<vegan dall-e home page.png>)
 #### Create image page
-![Alt text](<screen_shots/vegan dall-e create page.png>)
+![Screen shot of cerate image page](<vegan dall-e create page.png>)
 #### Sample MongoDB Collection
-![Alt text](<screen_shots/Vegan dall-e Schema.png>)
+![Screen shot of mongoDB schema for image collection](<Vegan dall-e Schema.png>)
 
 ## Whats next
 
